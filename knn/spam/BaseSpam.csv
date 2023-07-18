@@ -1,0 +1,11 @@
+id,numero_palavra,Numero_links,numero_anexos,classe
+1,120,2,1,spam
+2,100,0,1,nao_spam
+3,100,5,2,spam
+4,0,2,2,spam
+5,150,1,0,nao_spam
+6,132,2,2,spam
+7,203,2,4,spam
+8,126,5,3,spam
+9,298,0,4,nao_spam
+10,218,1,0,nao_spam

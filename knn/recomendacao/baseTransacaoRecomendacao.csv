@@ -1,0 +1,13 @@
+id,classificacao,preco_medio,italiana,japonesa,brasileira,classe
+1,"3.5",0,1,0,0,não recomendado
+2,3,1,0,1,0,não recomendado
+3,4,2,0,0,1,recomendado
+4,4,1,0,1,0,recomendado
+5,5,0,0,1,0,recomendado
+6,3,2,0,1,0,não recomendado
+7,1,0,0,0,1,não recomendado
+8,5,0,0,0,1,recomendado
+9,3,2,0,0,1,não recomendado
+10,5,0,1,0,0,recomendado
+11,3,1,1,0,0,não recomendado
+12,2,0,1,0,0,não recomendado

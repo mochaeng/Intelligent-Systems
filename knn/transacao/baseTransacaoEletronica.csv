@@ -1,0 +1,14 @@
+id,valor_transacao,debito,especie,credito,eletronico,nao_eletronico,perfil_social,classe
+1,2000,1,0,0,1,0,2,fraude
+2,10000,0,0,1,1,0,2,fraude
+3,1000,0,0,1,1,0,2,não fraude
+4,1000,0,1,0,0,1,2,não fraude
+5,50,1,0,0,1,0,1,não fraude
+6,5000,1,0,0,1,0,0,não fraude
+7,10000,0,0,1,1,0,0,não fraude
+8,2000,0,1,0,0,1,1,não fraude
+9,12000,1,0,0,1,0,2,fraude
+10,12500,1,0,0,1,0,1,fraude
+11,5000,0,0,1,1,0,1,não fraude
+12,80000,1,0,0,1,0,0,fraude
+13,100000,0,0,1,1,0,0,fraude
