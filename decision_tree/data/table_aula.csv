@@ -1,0 +1,11 @@
+T,Genero,Carro Proprio?,Custo por km,Tipo de Transporte
+T1,Masculino,0,Barato,Onibus
+T2,Masculino,1,Barato,Onibus
+T3,Feminino,1,Barato,Trem
+T4,Feminino,0,Barato,Onibus
+T5,Masculino,1,Barato,Onibus
+T6,Masculino,0,Razoavel,Trem
+T7,Feminino,1,Razoavel,Trem
+T8,Feminino,1,Custoso,Carro
+T9,Masculino,2,Custoso,Carro
+T10,Feminino,2,Custoso,Carro
