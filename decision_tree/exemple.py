@@ -65,7 +65,7 @@ class DecisionTree:
         print('Criando nó')
         
         if column_to_remove != None and value != None:
-            columns = columns[columns[column_to_remove] == value]
+            columns = columns[columns[column_to_remove] != value]
             columns = columns.drop(column_to_remove, axis=1)
 
         print(columns)
@@ -130,7 +130,7 @@ def gain_latex_expression(node_total, node_parent, entropy):
 
 target_name = 'Classe'
 
-data_frame = pd.read_csv("./data/questao_01.csv")
+data_frame = pd.read_csv("./data/table_aula.csv")
 y = data_frame[target_name]
 dt = DecisionTree(data_frame, target_name, target_name)
 print(data_frame.columns)
@@ -143,8 +143,6 @@ print(data_frame.columns)
 
 col = dt.make_level(data_frame[['Numero_Patas', 'Tipo_Alimentacao', 'Tem_Cauda', 'Classe']])
 col = dt.make_level(col, column_to_remove='Numero_Patas', value=0)
-# col = dt.make_level(col, column_to_remove='Tem_Cauda', value='Sim')
-# col = dt.make_level(col, column_to_remove='Tipo_Alimentacao', value='Onívoro')
 # col = dt.make_level(col, column_to_remove='Tipo_Alimentacao', value='Onívoro')
 
 

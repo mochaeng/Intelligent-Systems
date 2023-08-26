@@ -1,0 +1,15 @@
+Dia,Tempo,Temperatura,Umidade,Vento,Jogar
+1,Sol,Quente,Alta,Fraco,Não
+2,Sol,Quente,Alta,Forte,Não
+3,Nublado,Quente,Alta,Fraco,Sim
+4,Chuva,Agradável,Alta,Fraco,Sim
+5,Chuva,Frio,Normal,Fraco,Sim
+6,Chuva,Frio,Normal,Forte,Não
+7,Nublado,Frio,Normal,Forte,Sim
+8,Sol,Agradável,Alta,Fraco,Não
+9,Sol,Frio,Normal,Fraco,Sim
+10,Chuva,Agradável,Normal,Fraco,Sim
+11,Sol,Agradável,Normal,Forte,Sim
+12,Nublado,Agradável,Alta,Forte,Sim
+13,Nublado,Quente,Normal,Fraco,Sim
+14,Chuva,Agradável,Alta,Forte,Não

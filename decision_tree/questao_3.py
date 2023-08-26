@@ -1,4 +1,5 @@
 from math import log2
+from numpy import sort
 import pandas as pd
 import sympy
 from sympy.core import symbols
@@ -58,14 +59,54 @@ class DecisionTree:
             entropy += -prob * log2(prob)
 
         return entropy
+    
+    
+    def calc_numeric_features(self, columns, column_to_check, target):
+        sorted_values = sort(columns[column_to_check])
+        parent = self.create_node(columns[target], 'Parent|' + target)
 
-    def make_level(self, columns, column_to_remove=None, value=None):
+        print()
+        print('#' * 30)
+        print('Cálculo de valor numérico')
+        print(parent)
+        all_gains = []
+
+        for value in sorted_values:
+            left_column = columns[columns[column_to_check] <= value]
+            right_column = columns[columns[column_to_check] > value]
+            
+            left_node = self.create_node(left_column[target], str(value) + '|left')
+            right_node = self.create_node(right_column[target], str(value) + '|right')
+            
+            nodes = [left_node, right_node]
+            summation = 0
+            for node in nodes:
+                summation += (node['total'] / parent['total']) * node['entropy']
+            gain = parent['entropy'] - summation
+
+            all_gains.append((value, gain))
+
+            print()
+            print(left_node)
+            print(right_node)
+            print(f'ganho: {gain}')
+        
+        all_gains.sort(key=lambda x: x[1])
+        print(f'\ntodos os ganhos: {all_gains}')
+
+
+    def make_level(self, columns, column_to_remove=None, values=[], filter=False):
         print()
         print('#' * 50)
         print('Criando nó')
         
-        if column_to_remove != None and value != None:
-            columns = columns[columns[column_to_remove] == value]
+        if column_to_remove != None and len(values) > 0:
+            for value in values:
+                if filter:
+                    columns = columns[columns[column_to_remove] != value]
+                else:
+                    columns = columns[columns[column_to_remove] == value]
+
             columns = columns.drop(column_to_remove, axis=1)
 
         print(columns)
@@ -128,28 +169,21 @@ def gain_latex_expression(node_total, node_parent, entropy):
 
 
 
-target_name = 'Classe'
+target_name = 'Desempenho'
 
-data_frame = pd.read_csv("./data/questao_01.csv")
+data_frame = pd.read_csv("./data/questao_03.csv")
 y = data_frame[target_name]
 dt = DecisionTree(data_frame, target_name, target_name)
-print(data_frame.columns)
+d = data_frame[['Ligações_por_Dia', 'Reuniões_por_Semana', 'Experiência', 'Desempenho']]
 
-# dt.make_level(data_frame[['Genero', 'Carro Proprio?', 'Custo por km', 'Tipo de Transporte']])
-# dt.make_level(data_frame[['Genero', 'Carro Proprio?', 'Custo por km', 'Tipo de Transporte']], column_to_remove='Custo por km', value='Barato')
-# dt.make_level(data_frame[['Genero', 'Carro Proprio?', 'Tipo de Transporte']], column_to_remove='Genero', value='Feminino')
+dt.calc_numeric_features(d, 'Ligações_por_Dia', 'Desempenho')
 
-# id,Nome_Animal,Numero_Patas,Tipo_Alimentacao,Tem_Cauda,Classe
+col = dt.make_level(d)
+col = dt.make_level(col, column_to_remove='Ligações_por_Dia', values=[20, 25, 30], filter=True)
 
-col = dt.make_level(data_frame[['Numero_Patas', 'Tipo_Alimentacao', 'Tem_Cauda', 'Classe']])
-col = dt.make_level(col, column_to_remove='Numero_Patas', value=0)
+
 # col = dt.make_level(col, column_to_remove='Tem_Cauda', value='Sim')
 # col = dt.make_level(col, column_to_remove='Tipo_Alimentacao', value='Onívoro')
 # col = dt.make_level(col, column_to_remove='Tipo_Alimentacao', value='Onívoro')
 
-
-# col = dt.make_level(col, column_to_remove='Numero_Patas')
-
-# col = dt.make_level(col, column_to_remove='', value='Barato')
-# col = dt.make_level(col, column_to_remove='Genero', value='Feminino')
 

@@ -1,0 +1,16 @@
+#id,Nome_Animal,Numero_Patas,Tipo_Alimentacao,Tem_Cauda,Classe
+1,Cachorro,4,Carnívoro,Sim,Mamífero
+2,Gato,4,Carnívoro,Sim,Mamífero
+3,Vaca,4,Herbívoro,Sim,Mamífero
+4,Pato,2,Onívoro,Sim,Não-Mamífero
+5,Galinha,2,Onívoro,Sim,Não-Mamífero
+6,Cobra,0,Carnívoro,Não,Não-Mamífero
+7,Elefante,4,Herbívoro,Não,Mamífero
+8,Macaco,2,Onívoro,Sim,Mamífero
+9,Baleia,0,Carnívoro,Não,Mamífero
+10,Tartaruga,4,Onívoro,Sim,Não-Mamífero
+11,Girafa,4,Herbívoro,Não,Mamífero
+12,Leão,4,Carnívoro,Sim,Mamífero
+13,Hipopótamo,4,Herbívoro,Não,Mamífero
+14,Pinguim,2,Carnívoro,Não,Não-Mamífero
+15,Porco,4,Onívoro,Sim,Mamífero
