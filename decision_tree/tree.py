@@ -1,26 +1,26 @@
 from math import log2
 from numpy import sort
 import pandas as pd
-import sympy
-from sympy.core import symbols
 
 class Node:
     def __init__(self, name: str) -> None:
         self.name: str = name
-        self.sons: list[Node] = []
+        self.children: list[Node] = []
         self.entropy: float
         self.count: int
         self.probability: float
 
 
 class DecisionTree:
-    def __init__(self, data_frame: pd.pandas.DataFrame, target_name, decision_column: str) -> None:
+    def __init__(self, data_frame: pd.pandas.DataFrame, target_name, decision_column: str, numeric_columns=[]) -> None:
         self.root: Node | None = None
         self.data_frame = data_frame
         self.target_name = target_name
         self.decision_node: dict = {}
         self.columns = data_frame.columns.values.tolist()[1:-1]
         self.decision_column = decision_column
+        self.numeric_columns = numeric_columns
+    
 
         self.create_decision_node(data_frame[target_name], self.decision_column)
 
@@ -92,8 +92,13 @@ class DecisionTree:
             print(f'ganho: {gain}')
         
         all_gains.sort(key=lambda x: x[1])
-        print(f'\ntodos os ganhos: {all_gains}')
+        greater = all_gains[-1][0]
 
+        filtered = filter(lambda value: value <= greater, all_gains)
+
+        print(f'\ntodos os ganhos: {all_gains}')
+        print(f'valores filtrados: {list(filtered)}')
+    
 
     def make_level(self, columns, column_to_remove=None, values=[], filter=False):
         print()
@@ -119,7 +124,16 @@ class DecisionTree:
         for column in columns:
             if column == self.target_name:
                 continue
+            
+            if column in self.numeric_columns:
+                dt.calc_numeric_features(columns, column, self.target_name)
+
+                
+
             unique_values = columns[column].unique()
+    
+
+            print(f'\nunique values: {unique_values}')
             weight_summation = 0
             weight_calc = []
             print(f'\n$$$Coluna: {column}')
@@ -129,21 +143,10 @@ class DecisionTree:
                 name = column + '|' + str(unique_value)
                 node = self.create_node(partialy_column, name)
                 print(node)
-
-                # total_node = sympy.symbols('total_node')
-                # total_parent = sympy.symbols('total_parent')
-
-                # Create the division expression
-                # division_expr = total_node / total_parent
-
-                # Convert the division expression to LaTeX
-                # latex_str = sympy.latex(division_expr)
-                # print(latex_str)
                 
-                # print(gain_latex_expression(node['total'], parent['total'], node['entropy']))
                 weight = node['total'] / parent['total']
                 calc_str = f"({node['total']} / {parent['total']}) * {node['entropy']}"
-                # calc_str += f" * {node['entropy']} = {weight * node['entropy']}"
+
                 weight_summation += weight * node['entropy']
                 weight_calc.append(calc_str)
                 weight_calc.append('+')
@@ -153,6 +156,8 @@ class DecisionTree:
 
             print(f'Cálculo do ganho: {column}: {weight_calc}')
         
+        gains.sort(key=lambda x: x[1])
+
         gains = sorted(gains)
         print()
         print(f'Os ganhos para este nível são: {gains}')
@@ -160,31 +165,26 @@ class DecisionTree:
         return columns
         
 
-def gain_latex_expression(node_total, node_parent, entropy):
-    # e = sympy.symbols(entropy)
-    a_over_b = sympy.Rational(node_total, node_parent)
-    gain = sympy.Mul(a_over_b , entropy)
-    # gain = (a / b) * e
-    return sympy.latex(gain)
-
-
 
 target_name = 'Alvo'
-
 data_frame = pd.read_csv("./data/questao_02.csv")
-y = data_frame[target_name]
-dt = DecisionTree(data_frame, target_name, target_name)
+# y = data_frame[target_name]
+
+dt = DecisionTree(data_frame, target_name, target_name, numeric_columns=['Idade', 'Renda_Mensal', 'Histórico_de_Compras'])
 
 d = data_frame[['Idade', 'Renda_Mensal', 'Histórico_de_Compras' , 'Alvo']]
 
-dt.calc_numeric_features(d, 'Renda_Mensal', 'Alvo')
-
 col = dt.make_level(d)
-col = dt.make_level(col, column_to_remove='Idade', values=[20, 22], filter=True)
 
-dt.calc_numeric_features(col, 'Renda_Mensal', 'Alvo')
+# dt.calc_numeric_features(d, 'Renda_Mensal', 'Alvo')
 
-col = dt.make_level(col, column_to_remove='Renda_Mensal', values=["3.000,00", "3.500,00", "4.000,00"], filter=True)
+
+# col = dt.make_level(d)
+# col = dt.make_level(col, column_to_remove='Idade', values=[20, 22], filter=True)
+
+# dt.calc_numeric_features(col, 'Renda_Mensal', 'Alvo')
+
+# col = dt.make_level(col, column_to_remove='Renda_Mensal', values=["3.000,00", "3.500,00", "4.000,00"], filter=True)
 
 
 # col = dt.make_level(col, column_to_remove='Tem_Cauda', value='Sim')
